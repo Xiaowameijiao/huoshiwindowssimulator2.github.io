@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>windows电脑</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-image: url("https://github.com/Xiaowameijiao/huoshiwindows.github.io/blob/main/windows-default-background-xqbaeakmm9cqei4j.jpg?raw=true");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* 将背景图固定 */
+        background-position: center;
+        background-color: black;
+    }
+
+    #errorButton {
+        border: none;
+        background: none;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .error-window {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        background-color: white;
+        border: 2px solid black;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        padding: 20px;
+        display: none; /* 初始隐藏 */
+    }
+
+    .error-text {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .close-button {
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .close-button:hover {
+        background-color: #cc0000;
+    }
+
+    /* 透明黑色区域样式 */
+    #timeContainer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* 透明黑色 */
+        color: white;
+        text-align: right;
+        padding: 1px;
+        box-sizing: border-box;
+        font-size: 13px; /* 字体大小调整 */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    #timeContainer img {
+        cursor: pointer;
+    }
+
+    #time {
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+
+<button id="errorButton">
+    <img src="https://github.com/Xiaowameijiao/windowspng.github.io/blob/main/unnamed.png?raw=true" width="50" height="50" alt="错误按钮">
+</button>
+
+<audio id="errorAudio">
+    <source src="https://xiaowameijiao.github.io/huoshiwindowserrorsound.github.io/errorwindowssound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<!-- 新增的透明黑色区域 -->
+<div id="timeContainer">
+    <img src="https://raw.githubusercontent.com/Xiaowameijiao/huoshiwindows.github.io/main/windows-vista-icon-png-14.png" width="48" height="48" alt="按钮">
+    <span id="time"></span>
+</div>
+
+<script>
+    var errorWindows = []; // 存储所有已打开的错误窗口
+    var errorCount = 0;
+    var maxErrors = 15; // 最大错误窗口数量
+
+    document.getElementById("errorButton").addEventListener("click", function() {
+        if (errorCount >= maxErrors) {
+            // 移除所有内容和壁纸图，只显示新的背景图片
+            document.body.innerHTML = "";
+            document.body.style.backgroundImage = 'url("https://github.com/Xiaowameijiao/huoshiwindowserror.github.io/blob/main/unmountable-boot-volume.png?raw=true")';
+            return;
+        }
+        
+        // 启动定时器，每秒钟生成一个错误窗口
+        var interval = setInterval(function() {
+            if (errorCount >= maxErrors) {
+                clearInterval(interval); // 如果达到最大数量，停止定时器
+                return;
+            }
+            
+            displayErrorWindow();
+            
+            // 每次生成窗口后更新计数器
+            errorCount++;
+            
+            if (errorCount >= maxErrors) {
+                clearInterval(interval); // 如果达到最大数量，停止定时器
+            }
+        }, 1000); // 每秒钟生成一个错误窗口
+    });
+
+    function displayErrorWindow() {
+        // 创建白色小窗口的 DOM 结构
+        var errorWindow = document.createElement("div");
+        errorWindow.className = "error-window";
+        
+        // 错误字样
+        var errorText = document.createElement("div");
+        errorText.className = "error-text";
+        errorText.textContent = "错误Error";
+        errorWindow.appendChild(errorText);
+        
+        // 音频
+        var audio = document.getElementById("errorAudio");
+        audio.volume = 0.5; // 声音放大一点
+        audio.currentTime = 0; // 重置音频播放位置
+        audio.play();
+        
+        // 关闭按钮
+        var closeButton = document.createElement("button");
+        closeButton.className = "close-button";
+        closeButton.textContent = "关闭";
+        closeButton.addEventListener("click", function() {
+            errorWindow.style.display = "none"; // 隐藏小窗口
+        });
+        errorWindow.appendChild(closeButton);
+        
+        // 设置随机位置
+        var randomX = Math.random() * (window.innerWidth - 300);
+        var randomY = Math.random() * (window.innerHeight - 200);
+        errorWindow.style.left = randomX + "px";
+        errorWindow.style.top = randomY + "px";
+        
+        // 将白色小窗口添加到页面中
+        document.body.appendChild(errorWindow);
+        
+        // 显示小窗口
+        errorWindow.style.display = "block";
+        
+        // 将错误窗口添加到数组中
+        errorWindows.push(errorWindow);
+    }
+
+    function updateTime() {
+        var now = new Date();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var timeString = hours + ':' + minutes;
+        document.getElementById("time").textContent = timeString;
+    }
+
+    setInterval(updateTime, 1000); // 每秒更新一次时间
+    updateTime(); // 初始调用以立即显示时间
+</script>
+
+</body>
+</html>
