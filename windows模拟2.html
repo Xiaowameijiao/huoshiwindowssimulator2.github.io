@@ -26,7 +26,7 @@
     .error-window {
         position: absolute;
         width: 300px;
-        height: 200px;
+        height: 105px;
         background-color: white;
         border: 2px solid black;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -42,7 +42,7 @@
     }
 
     .close-button {
-        background-color: #ff0000;
+        background-color: #555555;
         color: white;
         border: none;
         padding: 10px 20px;
@@ -52,7 +52,7 @@
     }
 
     .close-button:hover {
-        background-color: #cc0000;
+        background-color: #555555;
     }
 
     /* 透明黑色区域样式 */
@@ -100,7 +100,7 @@
 <script>
     var errorWindows = []; // 存储所有已打开的错误窗口
     var errorCount = 0;
-    var maxErrors = 15; // 最大错误窗口数量
+    var maxErrors = 20; // 最大错误窗口数量
 
     document.getElementById("errorButton").addEventListener("click", function() {
         if (errorCount >= maxErrors) {
@@ -136,7 +136,7 @@
         // 错误字样
         var errorText = document.createElement("div");
         errorText.className = "error-text";
-        errorText.textContent = "错误Error";
+        errorText.textContent = "错误 Error 系统检测到危险，不要再次按下文件。";
         errorWindow.appendChild(errorText);
         
         // 音频
@@ -181,6 +181,41 @@
     setInterval(updateTime, 1000); // 每秒更新一次时间
     updateTime(); // 初始调用以立即显示时间
 </script>
+<script>
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
 
+        // 禁用文本选择
+        document.addEventListener('selectstart', function(event) {
+            event.preventDefault();
+        });
+
+        // 禁用复制
+        document.addEventListener('copy', function(event) {
+            event.preventDefault();
+        });
+
+        // 禁用开发者工具快捷键
+        document.addEventListener('keydown', function(event) {
+            // 禁用 F12
+            if (event.key === 'F12') {
+                event.preventDefault();
+            }
+            // 禁用 Ctrl+Shift+I
+            if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+                event.preventDefault();
+            }
+            // 禁用 Ctrl+Shift+J (打开控制台)
+            if (event.ctrlKey && event.shiftKey && event.key === 'J') {
+                event.preventDefault();
+            }
+            // 禁用 Ctrl+U (查看源代码)
+            if (event.ctrlKey && event.key === 'U') {
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
