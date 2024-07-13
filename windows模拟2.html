@@ -78,22 +78,7 @@
     #time {
         margin-right: 10px;
     }
-#fullscreen-btn {
-    position: fixed;
-    right: 50px; /* 修改为右下角 */
-    bottom: 10px;
-    padding: 10px 20px;
-    background-color: #00000027;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1000;
-}
 
-#fullscreen-btn:focus {
-    outline: none;
-}
 </style>
 </head>
 <body>
@@ -111,11 +96,10 @@
     <img src="https://raw.githubusercontent.com/Xiaowameijiao/huoshiwindows.github.io/main/windows-vista-icon-png-14.png" width="48" height="48" alt="按钮">
     <span id="time"></span>
 </div>
-    <button id="fullscreen-btn">全屏模式</button>
 <script>
     var errorWindows = [];
     var errorCount = 0;
-    var maxErrors = 30; //数量
+    var maxErrors = 100; //数量
 
     document.getElementById("errorButton").addEventListener("click", function() {
         if (errorCount >= maxErrors) {
@@ -137,7 +121,7 @@
             if (errorCount >= maxErrors) {
                 clearInterval(interval);
             }
-        }, 500); //速度
+        }, 300); //速度
     });
 
     function displayErrorWindow() {
@@ -224,35 +208,5 @@
     });
 </script>
 
-<script>
-document.getElementById('fullscreen-btn').addEventListener('click', function() {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen()
-            .then(() => {
-                document.getElementById('fullscreen-btn').style.display = 'none';
-            })
-            .catch((err) => {
-                console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-            });
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen()
-                .then(() => {
-                    document.getElementById('fullscreen-btn').style.display = 'block';
-                })
-                .catch((err) => {
-                    console.log(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`);
-                });
-        }
-    }
-});
-
-document.addEventListener('fullscreenchange', (event) => {
-    if (!document.fullscreenElement) {
-        document.getElementById('fullscreen-btn').style.display = 'block';
-    }
-});
-
-</script>
 </body>
 </html>
